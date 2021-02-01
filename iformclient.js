@@ -47,24 +47,34 @@ function introducefunction(){
 
 //code to skip errors
 function pFnumber(){
-
-}
+    var pfNumber = 'PF-';
+            
+    if($('#PFNumb').val() != ''){
+        if($('#PFNumb').val() == pfNumber){
+            $('#PFNumb').val('');
+                return false;}
+        else{
+            var txt = $('#PFNumb').val();
+             $('#PFNumb').val(pfNumber + txt.replace(pfNumber, ''));
+            }
+    }      
+};
 
 function Enable_Section(){
-    if($(this).val() == "Salary Advance" || $(this).val() == "Motor Vehicle Insurance"){
-        $('#ApprovalDecisionnew').show();
+    if($('#LoanType').val() == "Salary Advance" || $('#LoanType').val() == "Motor Vehicle Insurance"){
+        $('#ApprovalDecisionnew').removeAttr("disabled","disabled");
     }else{
-      $('#ApprovalDecisionnew').hide();
+      $('#ApprovalDecisionnew').attr("disabled", "disabled");
   }
-    if($(this).val() == "Motor Vehicle Loan"){
-        $('#InterviewDate').show();
+    if($('#LoanType').val() == "Motor Vehicle Loan"){
+        $('#InterviewDate').removeAttr("disabled","disabled");
     }else{
-        $('#InterviewDate').hide();
+        $('#InterviewDate').attr("disabled", "disabled");
   }
-  if($(this).val() == "Motor Vehicle Repair" || $(this).val() == "Motor Vehicle Insurance" || $(this).val() == "Motor Vehicle Loan"){
+  if($('#LoanType').val() == "Motor Vehicle Repair" || $('#LoanType').val() == "Motor Vehicle Insurance" || $('#LoanType').val() == "Motor Vehicle Loan"){
       $('#frame3').show();
       $('#frame4').show();
-      if($(this).val() == "Motor Vehicle Repair"){
+      if($('#LoanType').val() == "Motor Vehicle Repair"){
           $('#frame5').show();
       }
   }else{
@@ -72,29 +82,47 @@ function Enable_Section(){
       $('#frame4').hide();
       $('#frame5').hide();
   }
-  if($(this).val() == "Tertiary Loan"){
+  if($('#LoanType').val() == "Tertiary Loan"){
       $('#frame6').show();
 
   }else{
       $('#frame6').hide();
   }
-  if($(this).val() == "Miscellaneous Loan" || $(this).val() == "Computer Loan"){
+  if($('#LoanType').val() == "Miscellaneous Loan" || $('#LoanType').val() == "Computer Loan"){
       $('#frame7').show();
 
   }else{
       $('#frame7').hide();
   }
-  if($(this).val() == "Salary Advance"){
+  if($('#LoanType').val() == "Salary Advance"){
       $('#frame8').show();
 
   }else{
       $('#frame8').hide();
   }
 }
+function SDecision_Enables(){
+    if($('#sDecision').val() == "refer" || $('#sDecision').val() == "return" ){
+        $('frame23').show();
+        $('#UserGroups').removeAttr("disabled","disabled");
+    }else{
+        $('#frame23').hide();
+        $('#UserGroups').attr("disabled","disabled");
+    }
+}
+
+/*function LoanType(){
+    if($('#LoanType').val() == "Computer Loan"){
+        if
+
+    }
+
+}*/
 // custom code
-$(function(){
+/*$(function(){
     var pfNumber = 'PF-';
     $('#PFNumb.input').keyup(function(e){
+        console.log("test");
         if($(this).val() != ''){  
             var txt = $(this).val();
             $(this).val(pfNumber + txt.replace(pfNumber, ''));
@@ -105,27 +133,27 @@ $(function(){
             return false;
         }
     });
-});
+});*/
 
-(function($) {
-  $.fn.inputFilter = function(inputFilter) {
-    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
-      if (inputFilter(this.value)) {
-        this.oldValue = this.value;
-        this.oldSelectionStart = this.selectionStart;
-        this.oldSelectionEnd = this.selectionEnd;
-      } else if (this.hasOwnProperty("oldValue")) {
-        this.value = this.oldValue;
-        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-      } else {
-        this.value = "";
-      }
+/*function setInputFilter(textbox, inputFilter) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+      textbox.addEventListener(event, function() {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
     });
   };
-}(jQuery));
   
-  $("#PFNumb").inputFilter(function(value) {
-    return /^\d*$/.test(value); });
+  setInputFilter(document.getElementById("PFNumb"), function(value) {
+    return /^\d*$/.test(value); }); -UNDO THIS */
 
   /*$("#LoanType").change(function(){
       if($(this).val() == "Salary Advance" || $(this).val() == "Motor Vehicle Insurance"){
@@ -175,7 +203,7 @@ $(function(){
 
 // custom code end
 function formLoad(){
-    if(getWorkItemData("activityName") == "Introduction_WS"){
+    if(getWorkItemData("activityname") == "Introduction_WS"){
         setStyle("frame17,visible,false");
         setStyle("frame14,visible,false");
         setStyle("frame16,visible,false");
@@ -185,6 +213,7 @@ function formLoad(){
 
  
 }
+window.onload = formLoad;
 
 function onRowClick(tableId,rowIndex){
     return true;
