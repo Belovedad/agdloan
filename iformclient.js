@@ -48,11 +48,14 @@ function introducefunction(){
 //code to skip errors
 function pFnumber(){
     var pfNumber = 'PF-';
+    var pfNumber1 = 'PF';
+    var pfNumber2 = 'P';
             
     if($('#PFNumb').val() != ''){
-        if($('#PFNumb').val() == pfNumber){
+        if($('#PFNumb').val() == pfNumber || $('#PFNumb').val() == pfNumber1 || $('#PFNumb').val() == pfNumber2 ){
             $('#PFNumb').val('');
-                return false;}
+                //return false;
+            }
         else{
             var txt = $('#PFNumb').val();
              $('#PFNumb').val(pfNumber + txt.replace(pfNumber, ''));
@@ -61,6 +64,7 @@ function pFnumber(){
 };
 
 function Enable_Section(){
+    //console.log(getWorkItemData("activityname"));
     if($('#LoanType').val() == "Salary Advance" || $('#LoanType').val() == "Motor Vehicle Insurance"){
         $('#ApprovalDecisionnew').removeAttr("disabled","disabled");
     }else{
@@ -68,46 +72,71 @@ function Enable_Section(){
   }
     if($('#LoanType').val() == "Motor Vehicle Loan"){
         $('#InterviewDate').removeAttr("disabled","disabled");
+        $('#InterviewDate').attr("required");
     }else{
         $('#InterviewDate').attr("disabled", "disabled");
+        $('#InterviewDate').removeAttr("required");
   }
   if($('#LoanType').val() == "Motor Vehicle Repair" || $('#LoanType').val() == "Motor Vehicle Insurance" || $('#LoanType').val() == "Motor Vehicle Loan"){
       $('#frame3').show();
+      $('#TypeOfVehicle').attr("required");
       $('#frame4').show();
       if($('#LoanType').val() == "Motor Vehicle Repair"){
           $('#frame5').show();
+          $('#InlandTrafficandTransportationValuation').attr("required");
+          $('#CompanyUndertakingtheRepair').attr("required");
+          $('#EstimatedCostofReparisofPresentUnitRecommended').attr("required");    
       }
   }else{
       $('#frame3').hide();
+      $('#TypeOfVehicle').removeAttr("required");
       $('#frame4').hide();
       $('#frame5').hide();
+      $('#InlandTrafficandTransportationValuation').removeAttr("required");
+      $('#CompanyUndertakingtheRepair').removeAttr("required");
+      $('#EstimatedCostofReparisofPresentUnitRecommended').attr("required");  
   }
   if($('#LoanType').val() == "Tertiary Loan"){
       $('#frame6').show();
-
+      $('#NameofInstitutionAttending').attr("required");
+      $('#CoursePursuing').attr("required");
+      $('#LengthofCourse').attr("required");
+      $('#StudentID').attr("required"); 
   }else{
       $('#frame6').hide();
+      $('#NameofInstitutionAttending').removeAttr("required");
+      $('#CoursePursuing').removeAttr("required");
+      $('#LengthofCourse').removeAttr("required");
+      $('#StudentID').removeAttr("required");
   }
   if($('#LoanType').val() == "Miscellaneous Loan" || $('#LoanType').val() == "Computer Loan"){
       $('#frame7').show();
-
+      $('#PurposeoftheLoan').attr("required");
   }else{
       $('#frame7').hide();
+      $('#PurposeoftheLoan').removeAttr("required");
   }
   if($('#LoanType').val() == "Salary Advance"){
       $('#frame8').show();
-
+      $('#PurposeoftheLoans').attr("required");
+      $('#DateofRequest').attr("required");
+      $('#SupervisorRecommendation').attr("required");
   }else{
       $('#frame8').hide();
+      $('#PurposeoftheLoans').removeAttr("required");
+      $('#DateofRequest').removeAttr("required");
+      $('#SupervisorRecommendation').removeAttr("required");
   }
 }
 function SDecision_Enables(){
     if($('#sDecision').val() == "refer" || $('#sDecision').val() == "return" ){
-        $('frame23').show();
+        $('#SendToUser').removeAttr("disabled","disabled");
         $('#UserGroups').removeAttr("disabled","disabled");
+        $('#Date').removeAttr("disabled","disabled");
     }else{
-        $('#frame23').hide();
+        $('#Date').attr("disabled","disabled");
         $('#UserGroups').attr("disabled","disabled");
+        $('#SendToUser').attr("disabled","disabled");
     }
 }
 
