@@ -61,10 +61,13 @@ function pFnumber(){
              $('#PFNumb').val(pfNumber + txt.replace(pfNumber, ''));
             }
     }      
-};
+}
+
+/*function Add_Username(){
+    $('#table4_UserName').val(getWorkItemData("userName"));
+}*/
 
 function Enable_Section(){
-    //console.log(getWorkItemData("activityname"));
     if($('#LoanType').val() == "Salary Advance" || $('#LoanType').val() == "Motor Vehicle Insurance"){
         $('#ApprovalDecisionnew').removeAttr("disabled","disabled");
     }else{
@@ -87,6 +90,12 @@ function Enable_Section(){
           $('#CompanyUndertakingtheRepair').attr("required");
           $('#EstimatedCostofReparisofPresentUnitRecommended').attr("required");    
       }
+      else{
+        $('#frame5').hide();
+        $('#InlandTrafficandTransportationValuation').removeAttr("required");
+        $('#CompanyUndertakingtheRepair').removeAttr("required");
+        $('#EstimatedCostofReparisofPresentUnitRecommended').removeAttr("required");  
+      }
   }else{
       $('#frame3').hide();
       $('#TypeOfVehicle').removeAttr("required");
@@ -94,7 +103,7 @@ function Enable_Section(){
       $('#frame5').hide();
       $('#InlandTrafficandTransportationValuation').removeAttr("required");
       $('#CompanyUndertakingtheRepair').removeAttr("required");
-      $('#EstimatedCostofReparisofPresentUnitRecommended').attr("required");  
+      $('#EstimatedCostofReparisofPresentUnitRecommended').removeAttr("required");  
   }
   if($('#LoanType').val() == "Tertiary Loan"){
       $('#frame6').show();
@@ -151,14 +160,13 @@ function SDecision_Enables(){
 /*$(function(){
     var pfNumber = 'PF-';
     $('#PFNumb.input').keyup(function(e){
-        console.log("test");
-        if($(this).val() != ''){  
-            var txt = $(this).val();
-            $(this).val(pfNumber + txt.replace(pfNumber, ''));
+        if($('#PFNumb.input').val() != ''){  
+            var txt = $('#PFNumb.input').val();
+            $('#PFNumb.input').val(pfNumber + txt.replace(pfNumber, ''));
         }
     }).keydown(function(e){
-        if($(this).val() == pfNumber){ 
-            $(this).val('');
+        if($('#PFNumb.input').val() == pfNumber){ 
+            $('#PFNumb.input').val('');
             return false;
         }
     });
@@ -231,18 +239,40 @@ function SDecision_Enables(){
   }); */
 
 // custom code end
+function tUsername(){
+    $('#table4_UserName').val(getWorkItemData("username"));
+}
+
+/*function rescheduleDate(){
+
+}*/
+
 function formLoad(){
+    Enable_Section();
+    SDecision_Enables();
+    //$('#table4_UserName').val(getWorkItemData("username"));
+
+    //document.getElementById('add_table4').onclick = console.log('test');
+
     if(getWorkItemData("activityname") == "Introduction_WS"){
-        setStyle("frame17,visible,false");
-        setStyle("frame14,visible,false");
-        setStyle("frame16,visible,false");
+        $('#frame17').hide();
+        $('#frame14').hide();
+        $('#frame16').hide();
+        $('#MOFPLoanEmailID_label').hide();
+        $('#MOFPLoanEmailID').hide();
+
+        $("#sDecision").click(function () {
+            $("#sDecision option").not(':first-child').each(function (index) {
+               $(this).prop('disabled', true);
+             });
+         })
 
     }
     //executeServerEvent("TRN","onLostFocus","",true);
 
  
 }
-window.onload = formLoad;
+//window.onload = formLoad;
 
 function onRowClick(tableId,rowIndex){
     return true;
@@ -301,5 +331,5 @@ function selectFeatureToBeIncludedInRichText(){
         'undo':true,
         'redo':true
         
-    }
+    };
 }
