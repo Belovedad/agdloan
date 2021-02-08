@@ -63,9 +63,7 @@ function pFnumber(){
     }      
 }
 
-/*function Add_Username(){
-    $('#table4_UserName').val(getWorkItemData("userName"));
-}*/
+
 
 function Enable_Section(){
     if($('#LoanType').val() == "Salary Advance" || $('#LoanType').val() == "Motor Vehicle Insurance"){
