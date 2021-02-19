@@ -65,6 +65,15 @@ function pFnumber(){
 
 //test//
 
+function getMDACode(){
+    var code = document.getElementById("MinistryDepartmentName").value;
+    var mdacode = executeServerEvent("getMDACode","onChange",code,true);
+    var holdtest = mdacode;
+    console.log(holdtest);
+    $('#MinistryDepartmentCode').val(mdacode);
+
+}
+
 function Enable_Section(){
    if($('#LoanType').val() == "Salary Advance" || $('#LoanType').val() == "Motor Vehicle Insurance"){
        $('#ApprovalDecisionnew').removeAttr("disabled","disabled");
@@ -145,7 +154,45 @@ function SDecision_Enables(){
        $('#UserGroups').attr("disabled","disabled");
        $('#SendToUser').attr("disabled","disabled");
    }
+   if($('#sDecision').val() == "cancelled"){
+       alert("Enter a reason for cancellation");
+   }
+   if($('#sDecision').val() == "Discard"){
+    alert("Discard selected.");
 }
+
+}
+
+function LoanLimit(){
+    let type = document.getElementById("LoanType").value
+    let amount = document.getElementById("LoanAmountRequested").value
+    
+    if(type == "Computer Loan" && amount > 80000){
+       alert("The amount requested for Computer Loans cannot exceed $80,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Miscellaneous Loan" && amount > 60000){
+        alert("The amount requested for Miscellaneous Loans cannot exceed $60,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Motor Vehicle Loan" && amount  > 2500000 && document.getElementById("TypeOfVehicle").value == "New"){
+        alert("The amount requested for New Motor Vehicle Loans must be $2,500,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Motor Vehicle Loan" && amount  > 1500000 && document.getElementById("TypeOfVehicle").value == "Used"){
+        alert("The amount requested for Used Motor Vehicle Loans must be $1,500,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Motor Vehicle Repair" && amount > 100000){
+        alert("The amount requested for Motor Vehicle Repair Loans cannot exceed $100,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Motor Vehicle Insurance" && amount > 50000){
+        alert("The amount requested for Motor Vehicle Insurance cannot exceed $50,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }else if(type == "Tertiary Loan" && amount > 500000){
+        alert("The amount requested for Tertiary Loans cannot exceed $500,000") 
+        document.getElementById("LoanAmountRequested").value = "";
+    }
+   
+   
+}
+
 
 /*function LoanType(){
    if($('#LoanType').val() == "Computer Loan"){
@@ -269,10 +316,9 @@ function formLoad(){
            $("#sDecision option").not(':first-child').each(function (index) {
               $(this).prop('disabled', true);
             });
-        })
+        });
 
    }
-
    if(getWorkItemData("activityname") == "Registry_Verification_WS"){
        $('#frame17').hide();
        $('#frame14').hide();
@@ -309,43 +355,48 @@ function formLoad(){
        if($('#LoanType').val() == "Salary Advance"){
            $('#frame8').hide();
        }
-       var values = ['resubmit', 'refer', 'discard','exception',
+       var values2 = ['resubmit', 'refer', 'discard','exception',
        'delinquent','rescinded','filed'];
        
-   $.each(values, function(k, v) {
-       $('option[value=' + v + ']').prop('disabled', true);
-   });
+        $.each(values2, function(k, v) {
+            $('option[value=' + v + ']').prop('disabled', true);
+        });
+
+   //alert($("#table1 tr").length);   - find out if check on save or done
    }
 
    if(getWorkItemData("activityname") == "Indebtness_Check_WS"){
-       $('PayeeBankAccountNumber_label').hide();
+       $('#PayeeBankAccountNumber_label').hide();
        $('#PayeeBankAccountNumber').hide();
-       $('MOFPApprovalDate_label').hide();
-       $('MOFPApprovalDate').hide();
-       $('LoanTerms_label').hide();
-       $('LoanTerms').hide();
-       $('TotalLoanAmount_label').hide();
-       $('TotalLoanAmount').hide();
-       $('InterestBearingAmountApproved_label').hide();
-       $('InterestBearingAmountApproved').hide();
-       $('InterestBearingMonthlyInstallment_label').hide();
-       $('InterestBearingMonthlyInstallment').hide();
-       $('InterestFreeAmountApproved_label').hide();
-       $('InterestFreeAmountApproved').hide();
-       $('InterestFreeMonthlyInstallment_label').hide();
-       $('InterestFreeMonthlyInstallment').hide();
-       $('CommencementMonth_label').hide();
-       $('CommencementMonth').hide();
-       $('PaymentVoucherNo_label').hide();
-       $('PaymentVoucherNo').hide();
-       $('PaymentVoucherdate_label').hide();
-       $('PaymentVoucherdate').hide();
-       $('LoanDisbursementDate_label').hide();
-       $('LoanDisbursementDate').hide();
-       $('InterestBearingSYNDILoanID_label').hide();
-       $('InterestBearingSYNDILoanID').hide();
-       $('PaymentVoucherdate_label').hide();
-       $('PaymentVoucherdate').hide();
+       $('#MOFPApprovalDate_label').hide();
+       $('#MOFPApprovalDate').hide();
+       $('#LoanTerms_label').hide();
+       $('#LoanTerms').hide();
+       $('#LastPrincipalBalance_label').hide();
+       $('#LastPrincipalBalance').hide()
+       $('#TotalLoanAmount_label').hide();
+       $('#TotalLoanAmount').hide();
+       $('#InterestBearingAmountApproved_label').hide();
+       $('#InterestBearingAmountApproved').hide();
+       $('#InterestBearingMonthlyInstallment_label').hide();
+       $('#InterestBearingMonthlyInstallment').hide();
+       $('#InterestFreeAmountApproved_label').hide();
+       $('#InterestFreeAmountApproved').hide();
+       $('#InterestFreeMonthlyInstallment_label').hide();
+       $('#InterestFreeMonthlyInstallment').hide();
+       $('#CommencementMonth_label').hide();
+       $('#CommencementMonth').hide();
+       $('#PaymentVoucherNo_label').hide();
+       $('#PaymentVoucherNo').hide();
+       $('#PaymentVoucherdate_label').hide();
+       $('#PaymentVoucherdate').hide();
+       $('#LoanDisbursementDate_label').hide();
+       $('#LoanDisbursementDate').hide();
+       $('#InterestBearingSYNDILoanID_label').hide();
+       $('#InterestBearingSYNDILoanID').hide();
+       $('#PortfolioBankAccount_label').hide();
+       $('#PortfolioBankAccount').hide();
+       $('#button6').hide();
 
        $('#frame3').hide();
        $('#frame4').hide();
@@ -353,12 +404,139 @@ function formLoad(){
        $('#frame6').hide();
        $('#frame7').hide();
        $('#frame8').hide();
+       $('#frame9').hide();
 
-
+       var values3 = ['resubmit', 'refer', 'incomplete', 'discard'];
        
-      
+       $.each(values3, function(k, v) {
+            $('option[value=' + v + ']').prop('disabled', true);
+        });
+   }
+
+   if(getWorkItemData("activityname") == "Delinquency_Verification_WS"){
+       $('#PayeeBankAccountNumber_label').hide();
+       $('#PayeeBankAccountNumber').hide();
+       $('#MOFPApprovalDate_label').hide();
+       $('#MOFPApprovalDate').hide();
+       $('#LoanTerms_label').hide();
+       $('#LoanTerms').hide();
+       $('#LastPrincipalBalance_label').hide();
+       $('#LastPrincipalBalance').hide()
+       $('#TotalLoanAmount_label').hide();
+       $('#TotalLoanAmount').hide();
+       $('#InterestBearingAmountApproved_label').hide();
+       $('#InterestBearingAmountApproved').hide();
+       $('#InterestBearingMonthlyInstallment_label').hide();
+       $('#InterestBearingMonthlyInstallment').hide();
+       $('#InterestFreeAmountApproved_label').hide();
+       $('#InterestFreeAmountApproved').hide();
+       $('#InterestFreeMonthlyInstallment_label').hide();
+       $('#InterestFreeMonthlyInstallment').hide();
+       $('#CommencementMonth_label').hide();
+       $('#CommencementMonth').hide();
+       $('#PaymentVoucherNo_label').hide();
+       $('#PaymentVoucherNo').hide();
+       $('#PaymentVoucherdate_label').hide();
+       $('#PaymentVoucherdate').hide();
+       $('#LoanDisbursementDate_label').hide();
+       $('#LoanDisbursementDate').hide();
+       $('#InterestBearingSYNDILoanID_label').hide();
+       $('#InterestBearingSYNDILoanID').hide();
+       $('#PortfolioBankAccount_label').hide();
+       $('#PortfolioBankAccount').hide();
+       $('#button6').hide();
+       $('#frame3').hide();
+       $('#frame4').hide();
+       $('#frame5').hide();
+       $('#frame6').hide();
+       $('#frame7').hide();
+       $('#frame8').hide();
+
+       var values4 = ['resubmit', 'refer','return','incomplete', 'discard','exception',
+       'delinquent','filed'];
+       
+       $.each(values4, function(k, v) {
+            $('option[value=' + v + ']').prop('disabled', true);
+        });
+
 
    }
+   if(getWorkItemData("activityname") == "Loan_Payment_Approval_WS"){
+       $('#PayeeBankAccountNumber_label').hide();
+       $('#PayeeBankAccountNumber').hide();
+       $('#MOFPApprovalDate_label').hide();
+       $('#MOFPApprovalDate').hide();
+       $('#InterestFreeAmountApproved_label').hide();
+       $('#InterestFreeAmountApproved').hide();
+       $('#InterestBearingMonthlyInstallment_label').hide();
+       $('#InterestBearingMonthlyInstallment').hide();
+
+       var values5 = ['resubmit','return','incomplete', 'discard','exception',
+       'delinquent','filed'];
+       
+       $.each(values5, function(k, v) {
+            $('option[value=' + v + ']').prop('disabled', true);
+        });
+        
+   }
+   if(getWorkItemData("activityname") == "Loan_Processing_Review_WS"){
+    $('#MOFPApprovalDate_label').hide();
+    $('#MOFPApprovalDate').hide();
+    $('#InterestFreeAmountApproved_label').hide();
+    $('#InterestFreeAmountApproved').hide();
+    $('#InterestBearingMonthlyInstallment_label').hide();
+    $('#InterestBearingMonthlyInstallment').hide();
+    $('#button6').hide();
+    $('#frame3').hide();
+    $('#frame4').hide();
+    $('#frame5').hide();
+    $('#frame6').hide();
+    $('#frame7').hide();
+    $('#frame8').hide();
+
+    var values6 = ['resubmit','refer','incomplete', 'discard','exception',
+       'delinquent','filed'];
+       
+    $.each(values6, function(k, v) {
+        $('option[value=' + v + ']').prop('disabled', true);
+    });
+
+   }
+
+   if(getWorkItemData("activityname") == "Recommendation_WS"){
+    $('#MOFPApprovalDate_label').hide();
+    $('#MOFPApprovalDate').hide();
+    $('#button6').hide();
+    $('#frame7').hide();
+
+    var values7 = ['resubmit','incomplete', 'discard','exception',
+       'delinquent','filed'];
+       
+    $.each(values7, function(k, v) {
+        $('option[value=' + v + ']').prop('disabled', true);
+    });
+    
+   }
+
+   if(getWorkItemData("activityname") == "Missing_Doc_WS"){
+    $('#MOFPApprovalDate_label').hide();
+    $('#MOFPApprovalDate').hide();
+    $('#InterestFreeAmountApproved_label').hide();
+    $('#InterestFreeAmountApproved').hide();
+    $('#InterestBearingMonthlyInstallment_label').hide();
+    $('#InterestBearingMonthlyInstallment').hide();
+    $('#button6').hide();
+
+    var values8 = ['refer','return','resubmit','incomplete', 'discard','exception',
+       'delinquent','filed'];
+       
+    $.each(values8, function(k, v) {
+        $('option[value=' + v + ']').prop('disabled', true);
+    });
+
+   }
+   
+
 
 
    
@@ -367,6 +545,8 @@ function formLoad(){
 
 
 }
+
+
 //window.onload = formLoad;
 
 function onRowClick(tableId,rowIndex){
