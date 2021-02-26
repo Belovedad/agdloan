@@ -63,14 +63,14 @@ function pFnumber(){
    }      
 }
 
-//test//
+
 
 function getMDACode(){
     var code = document.getElementById("MinistryDepartmentName").value;
     var mdacode = executeServerEvent("getMDACode","onChange",code,true);
-    var holdtest = mdacode;
-    console.log(holdtest);
-    $('#MinistryDepartmentCode').val(mdacode);
+    setValue("MinistryDepartmentCode",mdacode);
+    
+   
 
 }
 
@@ -518,14 +518,20 @@ function formLoad(){
     
    }
 
-   if(getWorkItemData("activityname") == "Missing_Doc_WS"){
+   if((getWorkItemData("activityname") == "Missing_Doc_WS") || (getWorkItemData("activityname") == "Loans_Processing_WS") || 
+   (getWorkItemData("activityname") == "MV_Loan_Processing_WS") ){
     $('#MOFPApprovalDate_label').hide();
     $('#MOFPApprovalDate').hide();
     $('#InterestFreeAmountApproved_label').hide();
     $('#InterestFreeAmountApproved').hide();
     $('#InterestBearingMonthlyInstallment_label').hide();
     $('#InterestBearingMonthlyInstallment').hide();
-    $('#button6').hide();
+    if((getWorkItemData("activityname") == "MV_Loan_Processing_WS")){
+        $('#button6').show();
+    }else{
+        $('#button6').hide();
+    }
+    
 
     var values8 = ['refer','return','resubmit','incomplete', 'discard','exception',
        'delinquent','filed'];
@@ -535,6 +541,35 @@ function formLoad(){
     });
 
    }
+
+   if((getWorkItemData("activityname") == "SAMVI_Approval_WS")){
+    $('#MOFPApprovalDate_label').hide();
+    $('#MOFPApprovalDate').hide();
+    $('#InterestFreeAmountApproved_label').hide();
+    $('#InterestFreeAmountApproved').hide();
+    $('#InterestBearingMonthlyInstallment_label').hide();
+    $('#InterestBearingMonthlyInstallment').hide();
+    $('#button6').hide();
+
+    var values9 = ['submit','refer','resubmit','cancelled','incomplete', 'discard','exception',
+       'delinquent','filed','rescinded'];
+       
+    $.each(values9, function(k, v) {
+        $('option[value=' + v + ']').prop('disabled', true);
+    });
+
+
+   }
+
+   if((getWorkItemData("activityname") == "Registry_Final_WS")){
+    $('#MOFPApprovalDate_label').hide();
+    $('#MOFPApprovalDate').hide();
+    $('#InterestFreeAmountApproved_label').hide();
+    $('#InterestFreeAmountApproved').hide();
+    $('#InterestBearingMonthlyInstallment_label').hide();
+    $('#InterestBearingMonthlyInstallment').hide();
+   }
+
    
 
 
